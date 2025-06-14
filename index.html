@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kum's Day Out - Father's Day Special</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #fff8dc;
+      padding: 30px;
+      text-align: center;
+    }
+    #story-text {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    .option-button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #ffb703;
+      border: none;
+      border-radius: 8px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    #story-image {
+      max-width: 300px;
+      margin: 20px auto;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Kum's Day Out</h1>
+  <div id="story-text"></div>
+  <img id="story-image" src="" alt="Story Image">
+  <div id="options"></div>
+
+  <script>
+    const story = {
+      start: {
+        text: "A little more than half a century ago, a man was born, and he was named Kumaraguru",
+        options: {"Continue": "continue", "Nope I've had enough": "end"}
+      },
+      continue: {
+        text: "Now for 31 years he lead a rather bleak life, searching for true purpose and colour..",
+        options: {"Continue (i already gave you an exit option)": "continue1"}
+      },
+      continue1: {
+        text: "And then.. one fine march day, god decided to take pity on the poor man",
+        options: {"Yay!": "me", "Oh no": "end"}
+      },
+      me: {
+        text: "Enters GODS GIFT!!! ❤️",
+        image: "unnamed.jpg",
+        options: {"YESS I'm blessed": "yep", "Literally any other option": "end"}
+      },
+      yep: {
+        text: "Man becomes father. Now his life finally has happiness.",
+        options: {"Continue": "continue2"}
+      },
+      continue2: {
+        text: "Play Game?",
+        options: {"Like I have a choice.. Yes": "yes", "I do.. I don't want to play": "end"}
+      },
+      yes: {
+        text: "You wake up on an average day. What do you do first?",
+        options: {"COFFEE": "end", "Milk": "trick", "Just Water please": "ok"}
+      },
+      ok: {
+        text: "Good choice.. but oh no! You're knee hurts. What do you do?",
+        options: {"Tough it out": "end", "Sit in one play for the rest of my life": "end", "GO TO THE DOCTOR": "ok1"}
+      },
+      ok1: {
+        text: "Now you are ok. Daughter (yay me) comes home with 25kg luggage. What do you do?",
+        options: {"Help her with it": "end", "Stand aside and let the 20 yr old do it coz im 60": "ok2"}
+      },
+      ok2: {
+        text: "So far so good. What is your daughter's favorite",
+        options: {"Pal Goa": "ok3", "Bittergaurd! what I always get her": "end", "Anything with sugar in it": "ok3"}
+      },
+      ok3: {
+        text: "And lastly. a hard question. What is your daughter currently working on? No help from amma",
+        options: {"Cosmology": "trick", "High Energy": "win"}
+      },
+      win: {
+        text: "Looks like you've won!! HAPPY FATHERS DAY❤️!!!",
+        image: "0.jpeg",
+        options: {}
+      },
+      trick: {
+        text: "Ohh that was a tough question. But looks like you've chosen the wrong option",
+        options: {"Try again": "continue2"}
+      },
+      end: {
+        text: "THAT WAS WRONG.",
+        options: {"start game?": "continue2", "start again from scratch": "start"}
+      }
+    };
+
+    const textDiv = document.getElementById("story-text");
+    const optionsDiv = document.getElementById("options");
+    const imageEl = document.getElementById("story-image");
+
+    function showPart(part) {
+      const segment = story[part];
+      textDiv.textContent = segment.text;
+
+      if (segment.image) {
+        imageEl.src = segment.image;
+        imageEl.style.display = "block";
+      } else {
+        imageEl.style.display = "none";
+      }
+
+      optionsDiv.innerHTML = "";
+      for (let [label, next] of Object.entries(segment.options)) {
+        const btn = document.createElement("button");
+        btn.textContent = label;
+        btn.className = "option-button";
+        btn.onclick = () => showPart(next);
+        optionsDiv.appendChild(btn);
+      }
+    }
+
+    showPart("start");
+  </script>
+</body>
+</html>
